@@ -1,6 +1,7 @@
 import { matchQuery } from '@tanstack/query-core'
-import type { QueryFilters } from '@tanstack/query-core'
+import type { Mutation, QueryFilters } from '@tanstack/query-core'
 import type {
+  MutationKey,
   Query,
   QueryFunctionContext,
   QueryKey,
@@ -61,7 +62,7 @@ export interface StoragePersisterOptions<TStorageValue = string> {
   filters?: QueryFilters
 }
 
-export const PERSISTER_KEY_PREFIX = 'tanstack-query'
+export const PERSISTER_QUERY_KEY_PREFIX = 'tanstack-query'
 
 /**
  * Warning: experimental feature.
@@ -88,7 +89,7 @@ export function experimental_createPersister<TStorageValue = string>({
   deserialize = JSON.parse as Required<
     StoragePersisterOptions<TStorageValue>
   >['deserialize'],
-  prefix = PERSISTER_KEY_PREFIX,
+  prefix = PERSISTER_QUERY_KEY_PREFIX,
   filters,
 }: StoragePersisterOptions<TStorageValue>) {
   return async function persisterFn<T, TQueryKey extends QueryKey>(
@@ -164,3 +165,26 @@ export function experimental_createPersister<TStorageValue = string>({
     return Promise.resolve(queryFnResult)
   }
 }
+
+export const PERSISTER_MUTATION_KEY_PREFIX = 'tanstack-query'
+
+export function experimental_createMutationPersister<TStorageValue = string>({
+  // storage,
+  // buster = '',
+  // maxAge = 1000 * 60 * 60 * 24,
+  // serialize = JSON.stringify as Required<
+  //   StoragePersisterOptions<TStorageValue>
+  // >['serialize'],
+  // deserialize = JSON.parse as Required<
+  //   StoragePersisterOptions<TStorageValue>
+  // >['deserialize'],
+  // prefix = PERSISTER_MUTATION_KEY_PREFIX,
+  // filters,
+}: StoragePersisterOptions<TStorageValue>) {
+  return async function persisterFn<TMutationKey extends MutationKey>(
+    context: QueryFunctionContext<TMutationKey>,
+    mutation: Mutation,
+  ) {
+    throw new Error('Not implemented')
+  }
+} 

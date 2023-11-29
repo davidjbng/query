@@ -1,7 +1,7 @@
 import { describe, expect, test, vi } from 'vitest'
 import { Query, QueryCache, hashKey } from '@tanstack/query-core'
 import {
-  PERSISTER_KEY_PREFIX,
+  PERSISTER_QUERY_KEY_PREFIX,
   experimental_createPersister,
 } from '../createPersister'
 import { sleep } from './utils'
@@ -32,7 +32,7 @@ function setupPersister(
     signal: undefined as AbortSignal,
   }
   const queryHash = hashKey(queryKey)
-  const storageKey = `${PERSISTER_KEY_PREFIX}-${queryHash}`
+  const storageKey = `${PERSISTER_QUERY_KEY_PREFIX}-${queryHash}`
 
   const queryFn = vi.fn()
 
